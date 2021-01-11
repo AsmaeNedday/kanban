@@ -1,6 +1,6 @@
 package com.ndy.kanban.domain;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -11,32 +11,50 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Task {
 	
 	@Id 
 	@GeneratedValue
-	private Long id;	
+	private Long id;
+	
+	@NotNull(message = "Title cannot be null")
+	@NotEmpty(message = "Title cannot be empty")
 	private String title;
+	
+	@NotNull(message = "NbHoursReal cannot be null")
+	@Min(value = 0, message = "NbHoursReal should not be less than 0")
+    @Max(value = 100, message = "NbHoursReal should not be greater than 50")
 	private Integer nbHoursReal;
+	
+	@NotNull(message = "NbHoursForecast cannot be null")
+	@Min(value = 0, message = "NbHoursForecast should not be less than 0")
+    @Max(value = 100, message = "NbHoursForecast should not be greater than 50")
 	private Integer nbHoursForecast;
-	private LocalDate created;
+	
+	private LocalDateTime created;
 	
 	@ManyToOne
+	@Valid
 	private TaskType type;
 	
 	@ManyToOne
 	private TaskStatus status;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JsonIgnore
+	@JsonIgnoreProperties({"tasks", "password", "startContract"})
+	@NotEmpty(message = "Developers cannot be empty")
 	private Set<Developer> developers;
 	
 	@OneToMany(mappedBy="task",cascade= {CascadeType.ALL},orphanRemoval=true)
-	@JsonIgnore
+	@JsonIgnoreProperties("task")
 	private Set<ChangeLog> changeLogs;
 	
 	public Task() {
@@ -88,10 +106,10 @@ public class Task {
 	public void setNbHoursForecast(Integer nbHoursForecast) {
 		this.nbHoursForecast = nbHoursForecast;
 	}
-	public LocalDate getCreated() {
+	public LocalDateTime getCreated() {
 		return created;
 	}
-	public void setCreated(LocalDate created) {
+	public void setCreated(LocalDateTime created) {
 		this.created = created;
 	}
 	public TaskType getType() {

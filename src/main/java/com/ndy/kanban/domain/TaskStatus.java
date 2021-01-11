@@ -32,4 +32,16 @@ public class TaskStatus {
     public void setLabel(String label) {
         this.label = label;
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+           return true;
+        }
+        if (!(obj instanceof TaskStatus)) {
+           return false;
+        }
+        TaskStatus taskStatus = (TaskStatus ) obj;
+        return label.equals(taskStatus.getLabel()) && Long.compare(id,taskStatus.getId()) == 0;
+     }
 }

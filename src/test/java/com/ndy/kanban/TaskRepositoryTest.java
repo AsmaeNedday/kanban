@@ -1,6 +1,6 @@
 package com.ndy.kanban;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import org.junit.Assert;
 import org.junit.Test;
@@ -44,7 +44,7 @@ public class TaskRepositoryTest {
 		task.setTitle("task test");
 		task.setNbHoursReal(3);
 		task.setNbHoursForecast(4);
-		task.setCreated(LocalDate.now());
+		task.setCreated(LocalDateTime.now());
 		task.setType(this.taskTypeRepository.findById(Constants.TASK_TYPE_FEATURE_ID).orElse(null));
 		task.setStatus(this.taskStatusRepository.findById(Constants.TASK_STATUS_TODO_ID).orElse(null));
 		

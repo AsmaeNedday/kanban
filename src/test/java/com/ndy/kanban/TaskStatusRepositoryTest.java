@@ -24,6 +24,6 @@ public class TaskStatusRepositoryTest
     public void testFindAllTaskStatus() {
 
         Collection<TaskStatus> taskStatusList = this.taskStatusRepository.findAll();
-        Assert.assertEquals(3, taskStatusList.size());
+        Assert.assertEquals(4, taskStatusList.size());
     }
 }

@@ -1,6 +1,6 @@
 package com.ndy.kanban;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import org.junit.Assert;
 import org.junit.Test;
@@ -51,7 +51,7 @@ public class ChangeLogRepositoryTest {
 		task.setTitle("task test");
 		task.setNbHoursReal(3);
 		task.setNbHoursForecast(5);
-		task.setCreated(LocalDate.now());
+		task.setCreated(LocalDateTime.now());
 		task.setType(taskTypeRepository.findById(Constants.TASK_TYPE_FEATURE_ID).orElse(null));
 		task.setStatus(taskStatusRepository.findById(Constants.TASK_STATUS_TODO_ID).orElse(null));
 		//Save task to database
@@ -59,7 +59,7 @@ public class ChangeLogRepositoryTest {
 		
 		//Create new change log for the created task
 		ChangeLog changelog = new ChangeLog();
-		changelog.setOccured(LocalDate.now());
+		changelog.setOccured(LocalDateTime.now());
 		changelog.setTask(task);
 		changelog.setSourceStatus(taskStatusRepository.findById(Constants.TASK_STATUS_TODO_ID).orElse(null));
 		changelog.setTargetStatus(taskStatusRepository.findById(Constants.TASK_STATUS_DOING_ID).orElse(null));

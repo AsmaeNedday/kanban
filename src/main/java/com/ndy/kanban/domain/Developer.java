@@ -1,6 +1,6 @@
 package com.ndy.kanban.domain;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Entity;
@@ -8,6 +8,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Developer {
@@ -17,8 +19,9 @@ public class Developer {
 	private String lastname;
 	private String password;
 	private String email;
-	private LocalDate startContract;
+	private LocalDateTime startContract;
 	@ManyToMany(mappedBy="developers",fetch = FetchType.EAGER)
+	@JsonIgnoreProperties("developers")
 	private Set<Task> tasks;
 	
 	public Developer() {
@@ -54,11 +57,11 @@ public class Developer {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public LocalDate getStartContract() {
+	public LocalDateTime getStartContract() {
 		return startContract;
 	}
-	public void setStartContract(LocalDate startContract) {
-		this.startContract = startContract;
+	public void setStartContract(LocalDateTime localDateTime) {
+		this.startContract = localDateTime;
 	}
 	public Set<Task> getTasks() {
 		return tasks;

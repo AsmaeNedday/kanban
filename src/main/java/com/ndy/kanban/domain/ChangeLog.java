@@ -1,19 +1,22 @@
 package com.ndy.kanban.domain;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class ChangeLog {
 	
 	private @Id @GeneratedValue Long id ;
 	
-	private LocalDate occured;
+	private LocalDateTime occured;
 	 
 	@ManyToOne
+	@JsonIgnoreProperties("changeLogs")
 	private Task task;
 	 
 	@ManyToOne
@@ -39,10 +42,10 @@ public class ChangeLog {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public LocalDate getOccured() {
+	public LocalDateTime getOccured() {
 		return occured;
 	}
-	public void setOccured(LocalDate occured) {
+	public void setOccured(LocalDateTime occured) {
 		this.occured = occured;
 	}
 	

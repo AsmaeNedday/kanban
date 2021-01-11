@@ -1,7 +1,6 @@
 package com.ndy.kanban;
 
-import java.time.LocalDate;
-import java.time.Month;
+import java.time.LocalDateTime;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import com.ndy.kanban.dao.TaskStatusRepository;
 import com.ndy.kanban.domain.ChangeLog;
 import com.ndy.kanban.domain.Developer;
@@ -33,14 +31,14 @@ public class TaskTest {
 	   	dev1_test.setLastname("dev1_lastname");
 	   	dev1_test.setEmail("dev1@yahoo.com");
 	   	dev1_test.setPassword("dev1_password");
-	   	dev1_test.setStartContract(LocalDate.of(2019, Month.AUGUST, 1));
+	   	dev1_test.setStartContract(LocalDateTime.now());
 	   	
 	   	//Create new task
 	   	Task task = new Task();
 		task.setTitle("task test");
 		task.setNbHoursReal(3);
 		task.setNbHoursForecast(4);
-		task.setCreated(LocalDate.now());
+		task.setCreated(LocalDateTime.now());
 		
 		Assert.assertEquals(0,task.getDevelopers().size());
 		Assert.assertEquals(0,dev1_test.getTasks().size());
@@ -61,7 +59,7 @@ public class TaskTest {
 		Assert.assertEquals(0,task.getChangeLogs().size());
 		
 		ChangeLog changelog = new ChangeLog();
-		changelog.setOccured(LocalDate.now());
+		changelog.setOccured(LocalDateTime.now());
 		changelog.setSourceStatus(taskStatusRepository.findById(Constants.TASK_STATUS_TODO_ID).orElse(null));
 		changelog.setTargetStatus(taskStatusRepository.findById(Constants.TASK_STATUS_DOING_ID).orElse(null));
 		

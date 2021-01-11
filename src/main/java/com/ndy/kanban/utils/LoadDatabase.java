@@ -10,8 +10,7 @@ import com.ndy.kanban.domain.Developer;
 import com.ndy.kanban.domain.Task;
 import com.ndy.kanban.domain.TaskStatus;
 import com.ndy.kanban.domain.TaskType;
-import java.time.LocalDate;
-import java.time.Month;
+import java.time.LocalDateTime;
 import java.util.logging.Logger;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -46,7 +45,7 @@ public class LoadDatabase {
 		dev1.setLastname("MOROEY");
 		dev1.setEmail("s.moroey@yahoo.com");
 		dev1.setPassword("s123");
-		dev1.setStartContract(LocalDate.of(2019, Month.AUGUST, 1));
+		dev1.setStartContract(LocalDateTime.now());
 		developerRepository.save(dev1);
 		logger.info(dev1+"saved");
 		
@@ -55,7 +54,7 @@ public class LoadDatabase {
 		dev2.setLastname("SALVADOR");
 		dev2.setEmail("n.salvador@yahoo.com");
 		dev2.setPassword("n123");
-		dev2.setStartContract(LocalDate.of(2020, Month.APRIL, 1));
+		dev2.setStartContract(LocalDateTime.now());
 		developerRepository.save(dev2);
 		logger.info(dev2+"saved");
 		
@@ -64,7 +63,7 @@ public class LoadDatabase {
 		dev3.setLastname("GELLER");
 		dev3.setEmail("b.geller@yahoo.com");
 		dev3.setPassword("b123");
-		dev3.setStartContract(LocalDate.of(2019, Month.SEPTEMBER, 15));
+		dev3.setStartContract(LocalDateTime.now());
 		developerRepository.save(dev3);
 		logger.info(dev3+"saved");	
 		
@@ -80,6 +79,10 @@ public class LoadDatabase {
 		TaskStatus doing =new TaskStatus(Constants.TASK_STATUS_DOING_ID,Constants.TASK_STATUS_DOING_LABEL);
 		taskStatusRepository.save(doing);
 		logger.info(doing+"saved");	
+		
+		TaskStatus test =new TaskStatus(Constants.TASK_STATUS_TEST_ID,Constants.TASK_STATUS_TEST_LABEL);
+		taskStatusRepository.save(test);
+		logger.info(test+"saved");	
 		
 		TaskStatus done =new TaskStatus(Constants.TASK_STATUS_DONE_ID,Constants.TASK_STATUS_DONE_LABEL);
 		taskStatusRepository.save(done);
@@ -101,7 +104,7 @@ public class LoadDatabase {
 		task1.setTitle("Add navigation bar");
 		task1.setNbHoursReal(3);
 		task1.setNbHoursForecast(4);
-		task1.setCreated(LocalDate.now());
+		task1.setCreated(LocalDateTime.now());
 		task1.setType(taskTypeRepository.findById(Constants.TASK_TYPE_FEATURE_ID).orElse(null));
 		task1.setStatus(taskStatusRepository.findById(Constants.TASK_STATUS_TODO_ID).orElse(null));
 		taskRepository.save(task1);
@@ -128,7 +131,7 @@ public class LoadDatabase {
 	   		dev1_test.setLastname("dev1_lastname");
 	   		dev1_test.setEmail("dev1@yahoo.com");
 	   		dev1_test.setPassword("dev1_password");
-	   		dev1_test.setStartContract(LocalDate.of(2019, Month.AUGUST, 1));
+	   		dev1_test.setStartContract(LocalDateTime.now());
 	   		developerRepository.save(dev1_test);
 	   		logger.info(dev1_test+"saved");
 	   		
@@ -137,7 +140,7 @@ public class LoadDatabase {
 	   		dev2_test.setLastname("dev2_lastname");
 	   		dev2_test.setEmail("dev2@yahoo.com");
 	   		dev2_test.setPassword("dev2_password");
-	   		dev2_test.setStartContract(LocalDate.of(2020, Month.APRIL, 1));
+	   		dev2_test.setStartContract(LocalDateTime.now());
 	   		developerRepository.save(dev2_test);
 	   		logger.info(dev2_test+"saved");
 	   		
@@ -146,7 +149,7 @@ public class LoadDatabase {
 			task1.setTitle("Add navigation bar");
 			task1.setNbHoursReal(3);
 			task1.setNbHoursForecast(4);
-			task1.setCreated(LocalDate.now());
+			task1.setCreated(LocalDateTime.now());
 			task1.setType(taskTypeRepository.findById(Constants.TASK_TYPE_FEATURE_ID).orElse(null));
 			task1.setStatus(taskStatusRepository.findById(Constants.TASK_STATUS_TODO_ID).orElse(null));
 			taskRepository.save(task1);
@@ -156,7 +159,7 @@ public class LoadDatabase {
 			task2.setTitle("Fix pagination bug");
 			task2.setNbHoursReal(3);
 			task2.setNbHoursForecast(2);
-			task2.setCreated(LocalDate.now());
+			task2.setCreated(LocalDateTime.now());
 			task2.setType(taskTypeRepository.findById(Constants.TASK_TYPE_BUG_ID).orElse(null));
 			task2.setStatus(taskStatusRepository.findById(Constants.TASK_STATUS_TODO_ID).orElse(null));
 			taskRepository.save(task2);
@@ -164,14 +167,12 @@ public class LoadDatabase {
 			
 			//Adding changelog for test
 			ChangeLog changelog1 = new ChangeLog();
-			changelog1.setOccured(LocalDate.now());
+			changelog1.setOccured(LocalDateTime.now());
 			changelog1.setTask(task1);
 			changelog1.setSourceStatus(taskStatusRepository.findById(Constants.TASK_STATUS_TODO_ID).orElse(null));
 			changelog1.setTargetStatus(taskStatusRepository.findById(Constants.TASK_STATUS_DOING_ID).orElse(null));
 			changeLogRepository.save(changelog1);
-			logger.info(changelog1+"saved");
-			
-			
+			logger.info(changelog1+"saved");		
 	           
 	        };
 	    }
